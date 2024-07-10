@@ -3,25 +3,33 @@
 
   // If page number is not set, initialize it to 1.
   if (!isset($_COOKIE['page'])) {
-    setcookie("page", 1, time() + 300);
+    setcookie("page", 1, time() + 3600);
   }
+
+  setcookie('onSale', 0, time() + 3600);
 
   // Define the query to fetch the results.
   $query = "SELECT * FROM products WHERE '1'";
 
   if (isset($_POST["price"])) {
     $query = $query . " AND price <= " . $_POST['price'];
+    setcookie("page", 1, time() + 3600);
   }
 
-  if (isset($_POST["category"]) && $_POST['category'] != '') {
+  if (isset($_POST['category']) && $_POST['category'] != '') {
     $query = $query . " AND category = '" . $_POST['category'] . "'";
     setcookie('category', $_POST['category'], time() + 3600);
+    setcookie("page", 1, time() + 3600);
   }
-  else $query = $query . " AND category = '" . $_COOKIE['category'] . "'";
+  else if (isset($_COOKIE['category']) && $_COOKIE['category'] != '') {
+    $query = $query . " AND category = '" . $_COOKIE['category'] . "'";
+    setcookie("page", 1, time() + 3600);
+  }
 
   if (isset($_POST['onSale'])) {
     $query = $query . " AND onSale = '1'";
     setCookie('onSale', 1, time() + 3600);
+    setcookie("page", 1, time() + 3600);
   }
   else setcookie('onSale', 0, time() + 3600);
 
@@ -45,24 +53,24 @@
   <body>
     <div class="mainContainer">
       <div class="left">
-        <form action="" method="POST">
+        <form id="mainForm" action="" method="POST">
           <div class="section">
             <h3>Price</h3>
-            <input type="range" min="4.99" max="999.99" id="priceFilter" value=<?php echo $_POST['price'] ?> name="price">
+            <input type="range" min="4.99" max="999.99" id="priceFilter" value=<?php echo (isset($_POST['price']) ? $_POST['price'] : "520") ?> name="price" onChange="change()">
             <p class="priceValue">Showing products up to Rs. <span id="priceMax"></span></p>
             <hr />
           </div>
           <div class="section">
-            <h3>Category</h3>
+            <h3>Category</h3> <br />
             <?php
               if (isset($_COOKIE['category']) && $_COOKIE['category'] != "")
               {
             ?>
-            <p>Current category: <?php echo $_COOKIE['category'] ?></p>
+            <p>Current category: <?php echo (isset($_POST['category']) ? $_POST['category'] : $_COOKIE["category"]) ?></p>
             <?php
               }
             ?>
-            <select name="category" id="category">
+            <select name="category" id="category" onChange="change()">
               <option value=""></option>
               <option value="Electronics">Electronics</option>
               <option value="Clothing">Clothing</option>
@@ -84,9 +92,8 @@
             <hr />
           </div>
           <div class="section">
-            Status: <input type="checkbox" <?php if ($_COOKIE['onSale'] == 1) echo "checked" ?> name="onSale" id="onSale" /> On Sale <br />
+            Status: <input type="checkbox" <?php if ($_COOKIE['onSale'] == 1) echo "checked" ?> name="onSale" onChange="change()" id="onSale" /> On Sale <br />
             <hr />
-            <input type="submit" name="submit" class="btn btn-md btn-success">
           </div>
         </form>
       </div>
@@ -171,6 +178,11 @@
       let newCookie = `page=${newPageNumber}`;
       document.cookie = newCookie;
       location.reload();
+    }
+
+    //Function to submit form.
+    function change() {
+      document.getElementById("mainForm").submit();
     }
   </script>
 </html>

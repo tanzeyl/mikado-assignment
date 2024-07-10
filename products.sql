@@ -81,4 +81,6 @@ INSERT INTO products (name, price, category, onSale, imageLink) VALUES
 ('Ping Pong Paddle', 24.99, 'Sports', 1, 'https://example.com/pingpong.jpg'),
 ('Handbag', 59.99, 'Fashion Accessories', 0, 'https://example.com/handbag.jpg'),
 ('Necklace', 39.99, 'Fashion Accessories', 1, 'https://example.com/necklace.jpg'),
-('Fishing Rod', 49.99, 'Sports', 0, 'https://example.com/fishingrod')
+('Fishing Rod', 49.99, 'Sports', 0, 'https://example.com/fishingrod');
+
+UPDATE products SET imageLink = 'https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg';
