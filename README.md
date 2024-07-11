@@ -11,5 +11,23 @@ To begin installation of this project, first you need to have XAMPP Server which
 After downloading and installing the XAMPP Server, start it and run it's Apache and MySQL services.
 
 <center>
-  <img src="images/XAMPP Screenshot.jpg" />
+  <img src="images/XAMPP Screenshot.png" />
 </center>
+
+Upon succesfully running the mentioned services, go ahead and clone this repository in your ```Path_to_XAMPP_folder/htdocs``` directory.
+
+```
+  https://github.com/tanzeyl/mikado-assignment.git
+```
+
+After clonining this repository and pasting it in the right directory, open your web browser and navigate to <br /> ```http://localhost/mikado-assignment/index.php```
+
+<center>
+  <img src="images/App Screenshot.png" />
+</center>
+
+Note: This website is also hosted on ```https://mikado-assignment-1.onrender.com/```
+
+## Authors
+
+- [@tanzzeyl](https://www.github.com/tanzeyl)
